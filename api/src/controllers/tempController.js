@@ -25,7 +25,8 @@ const dataObj = data.map(elem=>{
   return {name:elem}
 })
 
- const dbData = await Temperamento.bulkCreate(data)
+const dbData = await Temperamento.bulkCreate(dataObj)
+//const dbData = await 
 console.log(dataObj)
 console.log(dbData)
 return dbData

@@ -1,6 +1,6 @@
 
 const {Router} = require ('express')
-const { getBreeds, getDetails } = require('../controllers/breedControllers')
+const { getBreeds, getDetails, createDog } = require('../controllers/breedControllers')
 
 
 const router = Router()
@@ -37,6 +37,14 @@ router.get('/:id', async (req,res)=>{
  const details = await getDetails(id)
 res.status(200).send(details)
 
+})
+
+router.post('/create', async (req,res)=>{
+    const body = req.body
+    console.log (body)
+
+    const created = await createDog(body)
+res.send(created)
 })
 
 module.exports= router

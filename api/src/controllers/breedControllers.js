@@ -28,7 +28,7 @@ const getBreeds = async () => {
         include: Temperamento
     })
     if(dbInfo.length){
-    const dbData = info.map(elem=>{
+    const dbData = dbInfo.map(elem=>{
         return{
             id: elem.id,
             name: elem.name,
@@ -54,21 +54,23 @@ const getDetails = async (id)=>{
         return e.id.toString() === id.toString()
     })
     const dogDetails = singleDog.map(e=>{
+        console.log(e)
         return{
             name: e.name,
             weight: e.weight,
             height: e.height,
             life_span: e.life_span,
             temperament: e.temperament,
-            img: e.img || "Image not available",
+            img: e.image,            
 
         }
     })
+    console.log(dogDetails)
     return dogDetails
 }
 
 const createDog = async (body) =>{
-
+    
     const { name, temperament, height, weight, life_span } = body
     const newDog = await Raza.create({
         name,
@@ -80,6 +82,20 @@ const createDog = async (body) =>{
     const temp = Temperamento.findAll({
         where: {name : temperament.toLowerCase()}
     })
+
+    //await newDog.addTemperamento(temp)
+
+    const send = await Raza.findAll({
+        where: {name: name},
+        include: {
+                model:Temperamento,
+                attributes:["name"],
+                through:{
+                    attributes:[]
+                }}
+    })
+    console.log(send)
+    return send
 }
 
 module.exports={
