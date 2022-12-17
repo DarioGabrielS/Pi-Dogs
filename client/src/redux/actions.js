@@ -2,13 +2,13 @@ import axios from 'axios';
 export const GET_DOGS = "GET_DOGS"
 export const ERROR = "ERROR"
 export const GET_USERS = "GET_USERS"
-
+export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS'
 export const getDogs = () =>{
     return async function (dispatch) {
         try {
             const info = await axios.get('http://localhost:3001/breeds')
             const dogs = info.data
-            console.log(dogs)
+//            console.log(dogs)
         dispatch({
                 type: GET_DOGS,
                 payload: dogs
@@ -23,10 +23,25 @@ export const getDogs = () =>{
     }
 }
 
+export const getTempers = ()=>{
+  return async function (dispatch){
+    try {
+      const info = await axios.get('http://localhost:3001/temperament')
+      const tempers = info.data
 
-// export default {
-//     getDogs,
-// }
+      dispatch({
+        type: GET_TEMPERAMENTS,
+        payload: tempers
+      })
+
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error
+      })
+    }
+  }
+}
 
 export const getUsers = () => {
     return function (dispatch) {

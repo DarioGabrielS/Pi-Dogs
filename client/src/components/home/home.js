@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom"
+import  {Card}  from "../card/card.js"
 
 export const Home = ()=>{
     return(
@@ -7,6 +8,11 @@ export const Home = ()=>{
         <NavLink to='/'>
             <button>Landing</button>
         </NavLink>
+        <NavLink to='/create'>
+            <button>Create Breed</button>
+        </NavLink>
+        <Card name="SanMi Terrier" weight='18' temper='Playful, Smart' />
+        <Card name="SanMi Terrier" weight='18' temper='Playful, Smart' />
         </>
     )
 }

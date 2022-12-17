@@ -2,6 +2,7 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import { Landing } from "./components/landing/landing";
 import { Home } from "./components/home/home";
+import { Form } from "./components/form/form";
 
 function App() {
   return (
@@ -13,8 +14,8 @@ function App() {
         <Route path ="/home">
           <Home/>
         </Route>
-        <Route>
-
+        <Route path ="/create">
+          <Form />
         </Route>
       </Switch>
     </div>
