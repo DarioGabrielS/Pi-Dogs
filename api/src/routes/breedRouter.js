@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
 
     res.send(created);
   } catch (error) {
-    res.status(400).send(error.errors[0].message);
+    res.status(400).send(error);
   }
 });
 

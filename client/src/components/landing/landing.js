@@ -28,6 +28,9 @@ export const Landing = () => {
       <NavLink to="/home">
         <button className={style.button}>Enter</button>
       </NavLink>
+      <NavLink to="/paginado">
+        <button className={style.button}>Paginado</button>
+      </NavLink>
     </div>
   );
 };

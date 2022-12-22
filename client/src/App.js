@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { Landing } from "./components/landing/landing";
 import { Home } from "./components/home/home";
 import { Form } from "./components/form/form";
+import { Paginado } from "./components/paginado/paginado";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <Route path ="/create">
           <Form />
+        </Route>
+        <Route path ="/paginado">
+          <Paginado />
         </Route>
       </Switch>
     </div>
