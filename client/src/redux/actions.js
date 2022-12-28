@@ -3,6 +3,9 @@ export const GET_DOGS = "GET_DOGS"
 export const ERROR = "ERROR"
 export const GET_USERS = "GET_USERS"
 export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS'
+export const FILTRO = 'FILTRO'
+
+
 export const getDogs = () =>{
     return async function (dispatch) {
         try {
@@ -41,6 +44,17 @@ export const getTempers = ()=>{
       })
     }
   }
+}
+
+export const filtro = (dogs)=>{
+  return function(dispatch){
+    const filtrado = dogs.filter(e=> e.origin === 'api')
+  dispatch({
+    type: FILTRO,
+    payload: filtrado
+  })
+  }
+
 }
 
 export const getUsers = () => {

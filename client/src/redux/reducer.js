@@ -1,6 +1,7 @@
-import { GET_DOGS, ERROR, GET_TEMPERAMENTS } from "./actions"
+import { GET_DOGS, ERROR, GET_TEMPERAMENTS, FILTRO } from "./actions"
 
 const initialState={
+  DOGS: [],
   allDogs : [],
   allTempers : [],
 }
@@ -10,7 +11,8 @@ function rootReducer (state = initialState, action){
         case GET_DOGS:
           return{
             ...state,
-            allDogs: action.payload
+            allDogs: action.payload,
+            DOGS: action.payload
           }
         case GET_TEMPERAMENTS:
           return{
@@ -22,6 +24,11 @@ function rootReducer (state = initialState, action){
                     ...state,
                     error: action.payload
                 }
+        case FILTRO:
+          return{
+            ...state,
+            allDogs: action.payload
+          }
         default:
 
             return { ...state}
