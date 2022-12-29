@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Card } from "../card/card"
 import style from "./paginado.module.css"
@@ -12,14 +12,20 @@ const [currentPage, setCurrentPage] = useState(1)
 const firstItem = (currentPage*dogsPerPage)-dogsPerPage
 const lastItem = (currentPage*dogsPerPage)-1
 const arr=[]
+const filterOn = useSelector(state=>state.filterOn)
+
+useEffect(()=>{
+    const init = 1
+    setCurrentPage(1)
+},[filterOn])
 
 function  handleClick (e) {
-   if(e.target.value==='next'&& currentPage!=pagesTotal){
+   if(e.target.value==='next'&& currentPage!==pagesTotal){
    
     const next = currentPage+1
     setCurrentPage(next)
    }
-   if(e.target.value ==='previous' && currentPage!=1){
+   if(e.target.value ==='previous' && currentPage!==1){
     const back = currentPage-1
     setCurrentPage(back)
     }
@@ -40,14 +46,19 @@ for(let i=1; i<=pagesTotal;i++){
 }
 let p=[]
 function display(){for(let i=firstItem; i<=lastItem; i++){
-                 
+    console.log(allDogs[i])
+   if( typeof(allDogs[i]) != 'undefined'){              
    p.push(<Card 
         name={allDogs[i].name}
         img={allDogs[i].image} 
-        temper={allDogs[i].temperament} 
-        weight={allDogs[i].weight}/>)
+        temperament={allDogs[i].temperament } 
+        weight={allDogs[i].weight }/>)
+        }
+    else {
+        
+    }
+    } return p
 }
-return p}
 return(
     
     <>
@@ -56,13 +67,13 @@ return(
         <h1></h1>
         <button value='first' onClick={handleFirst}>First</button>
         <button type='click' value='previous' onClick={(e)=>handleClick(e)}>̣Prev</button>
-        <div>{
+        <>{
         
             array.map(el=>{
                 return <button value={el} key={el} onClick={handlePage}>{el}</button>
             })
         }
-        </div>
+        </>
         <button type='click' value= 'next' onClick={(e)=>handleClick(e)}>Next</button>
         <button value='last' onClick={handleFirst}>Last</button>
         <div className={style.page}>{

@@ -6,11 +6,15 @@ const getBreeds = async () => {
     "https://api.thedogapi.com/v1/breeds?api_key=live_CjVw33PeoFeCmjbewLCe8ah7kucer21vitjiQX4rX3iHJuYY7K6I3Lhfvysox9tS"
   );
   const apiData = apiInfo.data.map((elem) => {
+    // if(typeof(elem.temperament) === 'string'){
+    //   let arrTemp = elem.temperament.split(', ')
+    // }
     return {
       id: elem.id,
       name: elem.name,
       image: elem.image.url,
       weight: elem.weight.metric,
+     // temperament: arrTemp,
       temperament: elem.temperament,
       origin: "api",
       life_span: elem.life_span,
@@ -37,7 +41,9 @@ const getBreeds = async () => {
         weight: elem.weight,
         height: elem.height,
         origin: "db",
-        temperament: elem.temperamentos,
+        temperament:( elem.temperamentos.map(el => { 
+          return el.name
+        }).join(' ')),
         life_span: elem.life_span,
       };
     });

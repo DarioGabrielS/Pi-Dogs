@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
-import  {Card}  from "../card/card.js"
 import { Paginado } from "../paginado/paginado.js"
-import {filtro} from "../../redux/actions.js"
+import {filtro, filterr} from "../../redux/actions.js"
 import { useState } from "react"
 import { useEffect } from "react"
 import { getTempers } from "../../redux/actions.js"
@@ -25,12 +24,11 @@ export const Home = ()=>{
     const dogs = useSelector(state=> state.DOGS)
     
     const [filter, setFilter] = useState({
+        
         origin:'',
         temperament:[],
-        az:'',
-        za:'',
-        weightmin:'',
-        weightmax:''
+        order:'az',
+                
     })
 
     const [dogsFiltered, setDogsFiltered] = useState(
@@ -68,22 +66,38 @@ export const Home = ()=>{
         } else if (filter.origin === 'all') {
             doguis = dogs
         } else { doguis = dogs}
-        if(filter.az === true){
-           const names = doguis.map(el => el.name)
+        if(filter.temperament.length>0){
+            doguis = (filter.temperament).map(el => doguis.filter(e => (e.temperament).split(', ').includes(el) ))
+            doguis = doguis.flat()
+        }
+        if(filter.order === 'az'){
+           const names = doguis.map(el => (el.name).toLowerCase())
            const sorted = names.sort()
-           const ordered = sorted.map((e)=> doguis.find(el=> el.name == e))
+           const ordered = sorted.map((e)=> doguis.find(el=> el.name.toLowerCase() === e))
            doguis = ordered
-        } else if (filter.za === true){
-           let names = doguis.map(el => el.name) 
+        } else if (filter.order === 'za'){
+           let names = doguis.map(el => el.name.toLowerCase()) 
            const sorted = names.sort().reverse()
-           const ordered = sorted.map((e)=> doguis.find(el=> el.name == e))
+           const ordered = sorted.map((e)=> doguis.find(el=> el.name.toLowerCase() === e))
            doguis = ordered
-        } 
+        } else if (filter.order === 'min'){
+           doguis = doguis.sort((a, b) => (parseInt((a.weight.split('-'))[0]) > parseInt((b.weight.split('-'))[0])) ? 1 : -1)
+        } else if (filter.order === 'max'){
+            doguis = doguis.sort((a, b) => (parseInt((a.weight.split('-'))[0]) < parseInt((b.weight.split('-'))[0])) ? 1 : -1)
+        }
+//         let doguis =['a','b','c']
+// let leters= ['a','b','d','3','c']
+//  leters = doguis.map(el=> leters.filter(e => e==el))
+// leters = leters.flat()
+// console.log(leters)
 
         setDogsFiltered(doguis)
-        dispatch(dogsFiltered)
+        dispatch(filterr(doguis))
     },[filter])
-    console.log(dogsFiltered.length,'este es el filtro')
+    const filterOn = useSelector(state=> state.filterOn)
+    console.log(dogsFiltered.length,'este es perros filtrados')
+    console.log(filter, 'el filtro')
+   // console.log(filterOn)
     return(
         <>
         <h1>Este es el home</h1>
@@ -101,6 +115,15 @@ export const Home = ()=>{
                     <option value={'api'}>Api</option>
                 
         </select>
+        <select name='order'
+                value={filter.order} 
+                onChange={(e)=>handleOrigin(e)}>
+                    <option value={'az'}>A to Z</option>
+                    <option value={'za'}>Z to A</option> 
+                    <option value={'min'}>Min to Max</option>
+                    <option value={'max'}>Max to Min</option>                 
+        </select>
+        
         <select name='temperament'
                 value={filter.temperament} 
                 onChange={(e)=>handleSelect(e)}>
@@ -126,3 +149,11 @@ export const Home = ()=>{
         </>
     )
 }
+
+// const list = ['2','1','6','8','4','10']
+// console.log(list.sort((a,b)=> a-b))
+// const peso =('10-45')
+// const valor=peso.split('-')
+// console.log(valor)
+// const ponderado = (parseInt(valor[0])+parseInt(valor[1]))/2
+// console.log(ponderado)
