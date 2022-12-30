@@ -12,15 +12,16 @@ export const Landing = () => {
   if (!allDogs.length)  dispatch(getDogs());
 
   return (
-    <div className={style.landing}>
-      <h1>Welcome to the Dog enciclopedia</h1>
-      <NavLink to="/home">
-        <button className={style.button}>Enter</button>
-      </NavLink>
-      <NavLink to="/paginado">
-        <button className={style.button}>Paginado</button>
-      </NavLink>
-    </div>
+    <>
+        <div className={style.landing}>
+          <h1>Welcome to the Dog enciclopedia</h1>
+        </div>
+        <div>
+          <NavLink to="/home">
+              <button className={style.button}>Enter</button>
+          </NavLink>
+        </div>
+    </>
   );
 };
 

@@ -5,6 +5,8 @@ export const GET_USERS = "GET_USERS"
 export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS'
 export const FILTRO = 'FILTRO'
 export const FILTERR = 'FILTERR'
+export const SEARCHBYNAME = 'SEARCHBYNAME'
+export const CLEARSEARCHBYNAME = 'CLEARSEARCHBYNAME'
 
 export const getDogs = () =>{
     return async function (dispatch) {
@@ -55,6 +57,32 @@ export const filterr = (dogs)=>{
   }
 
 
+}
+export const searchByName = (id)=>{
+  return async function (dispatch){
+    try {
+      const info = await axios.get(`http://localhost:3001/breeds?name=${id}` )
+      const dogs = info.data
+      dispatch({
+        type:SEARCHBYNAME,
+        payload: dogs,
+      })
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: error
+      })
+    }
+  }
+}
+
+export const clearSearchByName = ()=>{
+  return function (dispatch){
+    dispatch({
+      type:CLEARSEARCHBYNAME,
+      payload: false
+    })
+  }
 }
 export const filtro = (dogs)=>{
   return function(dispatch){

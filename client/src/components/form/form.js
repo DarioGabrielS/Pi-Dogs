@@ -43,8 +43,8 @@ const [errorForm, setErrorForm] = useState({
 })
 const dogSend = {
     name: dog.name,
-    weight: dog.minweight+' - '+dog.maxweight,
-    height: dog.minheight+' - '+dog.maxheight,
+    weight: dog.minweight+'-'+dog.maxweight,
+    height: dog.minheight+'-'+dog.maxheight,
     temperament: dog.temperament,
     life_span: dog.life_span+' years',
     img: dog.img
@@ -65,21 +65,11 @@ const handleChange = (e) =>{
         'temperament' : Array.from(new Set([...dog.temperament,e.target.value]))
     })
  }
-// const handleSubmit = (e) =>{
-//     e.preventDefault()
-    // alertdialog(
-    // <div role="alertdialog" aria-labelledby="tituloDialogo1" aria-describedby="descrDialogo1">
-    // <div role="document" tabindex="0">
-    //     <h2 id="tituloDialogo1">Tu sesión esta apunto de expirar</h2>
-    //     <p id="descrDialogo1">Para extender tu sesión de clic en el botón OK</p>
-    //     <button>OK</button>
-    // </div>
-    // </div>)
-//}
+
 const handleSubmit = async (e)=>{
     e.preventDefault()
     setErrorForm(validate(dog)) 
-    await axios.post('http://localhost:3001/breeds',dog)
+    await axios.post('http://localhost:3001/breeds',dogSend)
 }
 
 const validate = (dog)=> {
@@ -154,7 +144,7 @@ console.log(dog)
         <>
         <form onSubmit={handleSubmit}>
             <div>
-                <div><h3>Crete you own Breed</h3></div>
+                <div><h3>Create you own Breed</h3></div>
             <label >Name:  </label>
             <input 
                 name='name' 

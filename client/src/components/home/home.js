@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 import { Paginado } from "../paginado/paginado.js"
-import {filtro, filterr} from "../../redux/actions.js"
+import {filtro, filterr, searchByName, clearSearchByName} from "../../redux/actions.js"
 import { useState } from "react"
 import { useEffect } from "react"
 import { getTempers } from "../../redux/actions.js"
@@ -21,8 +21,9 @@ export const Home = ()=>{
     })
     const tempersSelect = tempers.sort()
     
-    const dogs = useSelector(state=> state.DOGS)
-    
+    const allDogs = useSelector(state=>state.DOGS)
+    const searchedDogs = useSelector(state=> state.searchedDogs)
+    const searchedFlag = useSelector(state => state.searchByName)
     const [filter, setFilter] = useState({
         
         origin:'',
@@ -34,6 +35,18 @@ export const Home = ()=>{
     const [dogsFiltered, setDogsFiltered] = useState(
         dogs
     )
+    
+
+    dogs = ''
+    if(searchedFlag){
+        var dogs = searchedDogs
+        
+    } else{
+        var dogs = allDogs        
+    }
+    // const dogs = useSelector(state=> state.DOGS)
+    // const searchedResult = useSelector(state=> state.searchedDogs)
+    
 
      function onClick (e){
          dispatch(filtro(dogs))
@@ -43,7 +56,7 @@ export const Home = ()=>{
         setFilter({...filter,
         [e.target.value]: (e.target.checked)}
         )
-        console.log(e.target)
+        
     }
     function handleOrigin (e) {
         setFilter({
@@ -57,8 +70,20 @@ export const Home = ()=>{
             'temperament': Array.from(new Set([...filter.temperament,e.target.value]))
         })
     }
+    // function data (){
+    //     if(searchedFlag){
+    //         const dogs = searchedDogs
+    //         return dogs
+            
+    //     } else{
+    //         const dogs = allDogs
+    //         return dogs        
+    //     }
+    // }
     useEffect(()=>{
+        
         let doguis=dogs
+        
         if(filter.origin === 'db') {            
             doguis = dogs.filter((e)=>{return e.origin === 'db'})
         } else if (filter.origin === 'api') {
@@ -93,14 +118,48 @@ export const Home = ()=>{
 
         setDogsFiltered(doguis)
         dispatch(filterr(doguis))
-    },[filter])
+    },[filter,searchedFlag])
     const filterOn = useSelector(state=> state.filterOn)
-    console.log(dogsFiltered.length,'este es perros filtrados')
-    console.log(filter, 'el filtro')
-   // console.log(filterOn)
+    // console.log(dogsFiltered.length,'este es perros filtrados')
+    // console.log(filter, 'el filtro')
+    const [searchDog, setSearchDog] = useState('')
+    function handleSearch (e){
+        const aux = e.target.value
+        setSearchDog(          
+            aux)
+    }
+    console.log(searchDog)
+    // const handleSearch = (e) =>{
+
+    //     setSearchDog ( {
+    //        ...searchDog,
+    //        [e.target.name] : e.target.value })
+        
+       
+    // }
+    function handleClickSearch (){
+        
+        dispatch(searchByName(searchDog))
+       
+        
+    }
+    function handleClickClear (){
+
+        dispatch(clearSearchByName())
+        setSearchDog('')
+    }    
+        
+    
     return(
         <>
         <h1>Este es el home</h1>
+        <div>
+        <input name='search' 
+        value={searchDog}
+        onChange={handleSearch}/>
+        <button type='button' name='search' onClick={handleClickSearch}>Search!</button>
+        <button type='button' name='clearsearch' onClick={handleClickClear}>Clear</button>
+        </div>
         <NavLink to='/'>
             <button>Landing</button>
         </NavLink>

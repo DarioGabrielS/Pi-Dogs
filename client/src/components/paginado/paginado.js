@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { NavLink } from "react-router-dom"
 import { Card } from "../card/card"
 import style from "./paginado.module.css"
 
@@ -46,13 +47,17 @@ for(let i=1; i<=pagesTotal;i++){
 }
 let p=[]
 function display(){for(let i=firstItem; i<=lastItem; i++){
-    console.log(allDogs[i])
+   if(allDogs.length<1){
+    return(<div><h3>Could not find requested dogs</h3></div>)
+   } 
    if( typeof(allDogs[i]) != 'undefined'){              
-   p.push(<Card 
-        name={allDogs[i].name}
-        img={allDogs[i].image} 
-        temperament={allDogs[i].temperament } 
-        weight={allDogs[i].weight }/>)
+   p.push(<NavLink to={`/details/${allDogs[i].id}`}>
+            <Card 
+                name={allDogs[i].name}
+                img={allDogs[i].image} 
+                temperament={allDogs[i].temperament } 
+                weight={allDogs[i].weight }/>
+         </NavLink>)
         }
     else {
         
@@ -62,9 +67,9 @@ function display(){for(let i=firstItem; i<=lastItem; i++){
 return(
     
     <>
-        <h1>Dogs per page{dogsPerPage}</h1>
+        {/* <h1>Dogs per page{dogsPerPage}</h1>
         <h1>Total Pages{pagesTotal}</h1>
-        <h1></h1>
+        <h1></h1> */}
         <button value='first' onClick={handleFirst}>First</button>
         <button type='click' value='previous' onClick={(e)=>handleClick(e)}>̣Prev</button>
         <>{
@@ -79,8 +84,8 @@ return(
         <div className={style.page}>{
             display()
         }</div>
-        <h3>Pagina actual {currentPage}</h3>
-        <h1>Primer item{firstItem} Ultimo item {lastItem}</h1>
+        <h4>Current Page {currentPage}</h4>
+        {/* <h1>Primer item{firstItem} Ultimo item {lastItem}</h1> */}
     </>
 )
 

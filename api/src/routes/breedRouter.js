@@ -4,7 +4,7 @@ const {
   getDetails,
   createDog,
 } = require("../controllers/breedControllers");
-
+const {validateDog} = require('./../utils/middleware')
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -37,8 +37,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", validateDog, async (req, res) => {
   try {
+    console.log(req.body)
     const created = await createDog(req.body);
 
     res.send(created);
@@ -48,3 +49,4 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
+ 

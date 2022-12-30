@@ -1,10 +1,13 @@
-import { GET_DOGS, ERROR, GET_TEMPERAMENTS, FILTRO, FILTERR } from "./actions"
+import { GET_DOGS, ERROR, GET_TEMPERAMENTS, FILTRO, FILTERR, SEARCHBYNAME, CLEARSEARCHBYNAME } from "./actions"
 
 const initialState={
   DOGS: [],
   allDogs : [],
   allTempers : [],
-  filterOn: true
+  filterOn: true,
+  searchByName: false,
+  searchedDogs: [],
+  error:''
 }
 
 function rootReducer (state = initialState, action){
@@ -31,6 +34,20 @@ function rootReducer (state = initialState, action){
             allDogs: action.payload,
             filterOn: !state.filterOn
           }
+        case SEARCHBYNAME:
+            return{
+              ...state,
+              searchedDogs: action.payload,
+          //    allDogs: action.payload,
+              searchByName: true
+            }
+        case CLEARSEARCHBYNAME:
+            return{
+              ...state,
+              searchByName: false,
+              searchedDogs:[],
+             // allDogs: state.DOGS
+            }
         case ERROR:
                 return{
                     ...state,
