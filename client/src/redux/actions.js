@@ -7,13 +7,17 @@ export const FILTRO = 'FILTRO'
 export const FILTERR = 'FILTERR'
 export const SEARCHBYNAME = 'SEARCHBYNAME'
 export const CLEARSEARCHBYNAME = 'CLEARSEARCHBYNAME'
+export const GET_DOG_PARAMS = 'GET_DOG_PARAMS'
+export const CLEAR_DETAIL = 'CLEAR_DETAIL'
+export const FILTER_HOLD = 'FILTER_HOLD'
+
 
 export const getDogs = () =>{
     return async function (dispatch) {
         try {
             const info = await axios.get('http://localhost:3001/breeds')
             const dogs = info.data
-//            console.log(dogs)
+
         dispatch({
                 type: GET_DOGS,
                 payload: dogs
@@ -21,7 +25,8 @@ export const getDogs = () =>{
         } catch (error) {
         dispatch({
                 type: ERROR,
-                payload: error
+                payload:{ 
+                  message : error.message}
             })
             
         }
@@ -42,7 +47,8 @@ export const getTempers = ()=>{
     } catch (error) {
       dispatch({
         type: ERROR,
-        payload: error
+        payload:{ 
+          message : error.message}
       })
     }
   }
@@ -70,12 +76,49 @@ export const searchByName = (id)=>{
     } catch (error) {
       dispatch({
         type: ERROR,
-        payload: error
+        payload:{ 
+          message : error.message}
       })
     }
   }
 }
 
+export const getdogparams = (id)=>{
+  return async function (dispatch){
+  try {
+    const info = await axios.get(`http://localhost:3001/breeds/${id}` )
+    const dog = info.data
+    dispatch({
+      type:GET_DOG_PARAMS,
+      payload:dog
+    })
+  } catch (error) {
+    dispatch({
+      type: ERROR,
+      payload:{
+        message : error.message}
+    })
+    
+  }
+  
+}
+}
+export const clearDetail = ()=>{
+  return function (dispatch){
+    dispatch({
+      type:CLEAR_DETAIL,
+      payload:[]
+    })
+  }
+}
+export const holdFilter = (obj)=>{
+  return function (dispatch){
+    dispatch({
+      type:FILTER_HOLD,
+      payload:obj
+    })
+  }
+}
 export const clearSearchByName = ()=>{
   return function (dispatch){
     dispatch({
@@ -84,6 +127,7 @@ export const clearSearchByName = ()=>{
     })
   }
 }
+
 export const filtro = (dogs)=>{
   return function(dispatch){
     const filtrado = dogs.filter(e=> e.origin === 'api')

@@ -1,3 +1,6 @@
+import { NavLink } from "react-router-dom"
+
+
 export const NavBar = () =>{
 
 
@@ -6,12 +9,13 @@ export const NavBar = () =>{
             <NavLink to='/home'>
                 <button type='button'>HOME</button>
             </NavLink>
-            <NavLink to='/form'>
+            <NavLink to='/create'>
                 <button type='button'>CREATE</button>
             </NavLink>
             <NavLink to='/about'>
                 <button type='button'>ABOUT</button>
             </NavLink>
+            
         </>
     )
 }

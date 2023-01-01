@@ -10,6 +10,7 @@ const router = Router();
 router.get("/", async (req, res) => {
   
   const { name } = req.query;
+  
   const data = await getBreeds();
 
   try {

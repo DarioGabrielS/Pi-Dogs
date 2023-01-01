@@ -4,7 +4,7 @@ import style from './card.module.css'
 export const Card = ({name, img, temperament, weight})=> {
 
     return(
-        <div>
+        
         <div className={style.card}>
 
 
@@ -14,7 +14,7 @@ export const Card = ({name, img, temperament, weight})=> {
             <img className={style.img} src={img} alt='Not found' />
         
         </div>
-        </div>
+        
     )
 
 }

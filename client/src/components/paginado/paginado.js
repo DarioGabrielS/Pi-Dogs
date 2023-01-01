@@ -46,23 +46,29 @@ for(let i=1; i<=pagesTotal;i++){
     array.push(i)
 }
 let p=[]
-function display(){for(let i=firstItem; i<=lastItem; i++){
+function display(){
+
+    for(let i=firstItem; i<=lastItem; i++){
    if(allDogs.length<1){
     return(<div><h3>Could not find requested dogs</h3></div>)
    } 
    if( typeof(allDogs[i]) != 'undefined'){              
-   p.push(<NavLink to={`/details/${allDogs[i].id}`}>
+   p.push(<section className={style.section}>
+    <NavLink to={`/breeds/${allDogs[i].id}` } className={style.nav}>
             <Card 
+                key={allDogs[i].id}
                 name={allDogs[i].name}
                 img={allDogs[i].image} 
                 temperament={allDogs[i].temperament } 
                 weight={allDogs[i].weight }/>
-         </NavLink>)
+         </NavLink>
+         </section>)
         }
     else {
         
     }
-    } return p
+} return p
+
 }
 return(
     
@@ -70,20 +76,21 @@ return(
         {/* <h1>Dogs per page{dogsPerPage}</h1>
         <h1>Total Pages{pagesTotal}</h1>
         <h1></h1> */}
-        <button value='first' onClick={handleFirst}>First</button>
-        <button type='click' value='previous' onClick={(e)=>handleClick(e)}>̣Prev</button>
-        <>{
+        <button className={style.button} value='first' onClick={handleFirst}>First</button>
+        <button className={style.button} type='click' value='previous' onClick={(e)=>handleClick(e)}>̣Prev</button>
+        <div className={style.button}
+    >{
         
             array.map(el=>{
                 return <button value={el} key={el} onClick={handlePage}>{el}</button>
             })
         }
-        </>
-        <button type='click' value= 'next' onClick={(e)=>handleClick(e)}>Next</button>
-        <button value='last' onClick={handleFirst}>Last</button>
-        <div className={style.page}>{
+        </div>
+        <button className={style.button} type='click' value= 'next' onClick={(e)=>handleClick(e)}>Next</button>
+        <button className={style.button} value='last' onClick={handleFirst}>Last</button>
+        <section className={style.page}>{
             display()
-        }</div>
+        }</section>
         <h4>Current Page {currentPage}</h4>
         {/* <h1>Primer item{firstItem} Ultimo item {lastItem}</h1> */}
     </>

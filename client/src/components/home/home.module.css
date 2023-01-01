@@ -1,5 +1,8 @@
 .page {
+    /* display: flex; */
     background-color: rgb(247, 209, 162);
     flex-direction: row;
     flex-wrap: wrap;
+    align-items:flex-start;
+    
 } 

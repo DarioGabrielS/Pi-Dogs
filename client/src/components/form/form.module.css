@@ -1,0 +1,27 @@
+.form{
+    display: flex;
+    align-items: center;
+
+    
+}
+.form h5{
+    color: rgb(241, 79, 50);
+}
+.form button{
+
+
+}
+
+    
+
+  
+.form input {
+    min-height: 50px;
+    max-width: 150px;
+    padding: 0 1rem;
+    color: #fff;
+    font-size: 15px;
+    border: 1px solid #5e4dcd;
+    border-radius: 6px 0 0 6px;
+    background-color: transparent;
+  }

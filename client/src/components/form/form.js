@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import {useSelector, useDispatch} from 'react-redux'
 import { getTempers } from "../../redux/actions"
 import axios from 'axios'
-
+import style from './form.module.css'
 export const Form = ()=>{
     
 const dispatch = useDispatch()
@@ -70,6 +70,7 @@ const handleSubmit = async (e)=>{
     e.preventDefault()
     setErrorForm(validate(dog)) 
     await axios.post('http://localhost:3001/breeds',dogSend)
+    const result = await axios.get(`http://localhost:3001/breeds?name=${dogSend.name}`)
 }
 
 const validate = (dog)=> {
@@ -83,15 +84,15 @@ const validate = (dog)=> {
     if(dog.minweight <1) errors.minweight='Weight must be greater than 0'
     if(!/^\d{1}\d?$/.test(dog.minweight)) errors.minweight='One or two digits number, no letters'
     
-    if(dog.maxweight<=dog.minweight) errors.maxweight='Maximum cant be smaller than minimum'
+    if(parseInt(dog.maxweight)<=parseInt(dog.minweight)) errors.maxweight='Maximum cant be smaller than minimum'
     if(!/^\d{1}\d?$/.test(dog.maxweight)) errors.maxweight='One or two digits number, no letters'
     
     if(!/^\d{1}\d?$/.test(dog.minheight)) errors.minheight='One or two digits number, no letters'
-    if(dog.minheight.length < 1) errors.minheight= ( 'Minimum weight must be just numbers, 2 digits' )
-    if(dog.minheight <1) errors.minheight='Weight must be greater than 0'
+    if(dog.minheight.length < 1) errors.minheight= ( 'Minimum height must be just numbers, 2 digits' )
+    if(dog.minheight <1) errors.minheight='Height must be greater than 0'
 
     if(!/^\d{1}\d?$/.test(dog.maxheight)) errors.maxheight='One or two digits number, no letters'
-    if(dog.maxheight<=dog.minheight) errors.maxheight='Maximum cant be smaller than minimum'
+    if(parseInt(dog.maxheight)<=parseInt(dog.minheight)) errors.maxheight='Maximum cant be smaller than minimum'
 
     if(!/^\d{2}-?(\d{2})?$/.test(dog.life_span)) errors.life_span='Data must be in XX or XX-XX format'
    
@@ -139,10 +140,10 @@ useEffect(()=>{
     }
 },[errorForm])
 console.log(dog)
-/*console.log(errorForm)*/
+
     return(
         <>
-        <form onSubmit={handleSubmit}>
+        <form className={style.form}onSubmit={handleSubmit}>
             <div>
                 <div><h3>Create you own Breed</h3></div>
             <label >Name:  </label>
@@ -152,7 +153,7 @@ console.log(dog)
                 type= 'text' 
                 onChange={(e)=>handleChange(e)} 
                 placeholder='Name is required' /> 
-                {errorForm.name? (<h6><small>{errorForm.name}</small></h6>) : false}
+                {errorForm.name? (<h5><small>{errorForm.name}</small></h5>) : false}
             </div>
             <div>
             <label >Min. Weight:  </label>
