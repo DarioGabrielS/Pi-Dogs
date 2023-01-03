@@ -29,7 +29,7 @@ const [dog, setDog] = useState({
     life_span: '',
     img:''
 })
-const [response, setResponse] = useState([{'uno':'dos'}])
+const [response, setResponse] = useState('')
 const [errorButton, setErrorButton] = useState(true)
 
 const [errorForm, setErrorForm] = useState({
@@ -51,7 +51,18 @@ const dogSend = {
     img: dog.img
 }
 
-
+const checkAvailable = async (dog)=>{
+    console.log(dog)
+    if(typeof(dog)!='undefined'){
+      const info = await axios.get(`http://localhost:3001/breeds?name=${dog.name}`)
+      const value = info.data
+        if(value.name.toLowerCase().trim === dog.name.toLowerCase().trim()){
+            return false 
+        }else{
+        return true
+  }
+}
+}
 const handleChange = (e) =>{
 
  setDog ( {
@@ -74,8 +85,9 @@ const handleSubmit = async (e)=>{
     const res = info.data
     setResponse(res)
     
-   // const result = await axios.get(`http://localhost:3001/breeds?name=${dogSend.name}`)
 }
+
+
 
 const validate = (dog)=> {
     const errors = {}
@@ -99,7 +111,8 @@ const validate = (dog)=> {
     if(parseInt(dog.maxheight)<=parseInt(dog.minheight)) errors.maxheight='Maximum cant be smaller than minimum'
 
     if(!/^\d{2}-?(\d{2})?$/.test(dog.life_span)) errors.life_span='Data must be in XX or XX-XX format'
-   
+    
+    console.log(checkAvailable())
     return errors
 }
 function handleTempButton (e){
@@ -145,12 +158,12 @@ useEffect(()=>{
 },[errorForm])
 
 function handleClear (){
-    /*setResponse('')*/
+    setResponse('')
 }
 
 if((response)!=''){
     console.log(response)
-    if(!response[0].hasOwnProperty('message')){
+    if(!response.message){
         
     return(
         <section className={style.created}>
@@ -164,6 +177,7 @@ if((response)!=''){
         return(
             <div>
             <h1>Request failed with status code 400</h1>
+            <h2>{response.message}</h2>
             <button type="button" onClick={handleClear}>Noted</button>
             </div>
         )

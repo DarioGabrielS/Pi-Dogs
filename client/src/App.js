@@ -7,6 +7,7 @@ import { Paginado } from "./components/paginado/paginado";
 import { NavBar } from "./components/NavBar/navBar";
 import { Details } from "./components/details/details";
 import {NotFound} from "./components/notFound/notFound"
+import { About } from "./components/about/about";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
         <Route path ="/create">
           <NavBar />
           <Form />
+        </Route>
+        <Route path='/about'>
+          <NavBar />
+          <About/>
         </Route>
         <Route path ="/paginado">
           <Paginado />

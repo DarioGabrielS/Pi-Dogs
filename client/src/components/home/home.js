@@ -4,7 +4,7 @@ import { Paginado } from "../paginado/paginado.js"
 import {filtro, filterr, searchByName, clearSearchByName, holdFilter} from "../../redux/actions.js"
 import { useState } from "react"
 import { useEffect } from "react"
-import { getTempers } from "../../redux/actions.js"
+import { getTempers, getDogs } from "../../redux/actions.js"
 import style from './home.module.css'
 
 export const Home = ()=>{
@@ -13,10 +13,11 @@ export const Home = ()=>{
 
     useEffect(()=>{
         dispatch(getTempers())
-        return ()=>{
-            dispatch(holdFilter(filter))
-          }
+        // return ()=>{
+        //     dispatch(holdFilter(filter))
+        //   }
     },[dispatch])
+
     
     const tempersDb = useSelector((state)=> state.allTempers)
     const tempers = tempersDb.map((e)=>{
@@ -25,25 +26,34 @@ export const Home = ()=>{
     const tempersSelect = tempers.sort()
 
     const filterhold= useSelector(state => state.holdFilter)
-    
+    //I get the error from the store and then conditionally render
     const error = useSelector(state=> state.error)
-    const allDogs = useSelector(state=>state.DOGS)
+    
+    //If dogs werent loaded on lading I send the request here
+    const allDogs = useSelector(state=>state.DOGS)    
+    if (!allDogs.length)  {dispatch(getDogs())};
+
+
     const searchedDogs = useSelector(state=> state.searchedDogs)
     const searchedFlag = useSelector(state => state.searchByName)
+    //Create a local state called filter so everytime I change it's content the component re-renders
     const [filter, setFilter] = useState({
         
         origin:'',
         temperament:[],
         order:'az',
-                
+        
     })
     
     
-    const [dogsFiltered, setDogsFiltered] = useState(
-        dogs
-    )
-    
 
+    //OJO ESTA LINEA QUE ESTA DECLARADA PERO PARECE QUE NO HACE NADA
+    
+    // const [dogsFiltered, setDogsFiltered] = useState(
+    //     dogs
+    // )
+    
+    //If the search option was used then ALLDOGS become just the searched dogs, else
     dogs = ''
     if(searchedFlag){
         var dogs = searchedDogs
@@ -51,20 +61,22 @@ export const Home = ()=>{
     } else{
         var dogs = allDogs        
     }
-    // const dogs = useSelector(state=> state.DOGS)
-    // const searchedResult = useSelector(state=> state.searchedDogs)
-    
+        
 
      function onClick (e){
-         dispatch(filtro(dogs))
+         setFilter({
+            ...filter,
+            'temperament':[]
+
+         })
      }
 
-    function handleCheck (e){
-        setFilter({...filter,
-        [e.target.value]: (e.target.checked)}
-        )
+    // function handleCheck (e){
+    //     setFilter({...filter,
+    //     [e.target.value]: (e.target.checked)}
+    //     )
         
-    }
+    // }
     function handleOrigin (e) {
         setFilter({
             ...filter,
@@ -77,17 +89,7 @@ export const Home = ()=>{
             'temperament': Array.from(new Set([...filter.temperament,e.target.value]))
         })
     }
-    // function data (){
-        //     if(searchedFlag){
-            //         const dogs = searchedDogs
-            //         return dogs
-            
-            //     } else{
-                //         const dogs = allDogs
-                //         return dogs        
-                //     }
-                // }
-                console.log(filter.temperament)
+  
     useEffect(()=>{
         
         let doguis=dogs
@@ -100,30 +102,42 @@ export const Home = ()=>{
             doguis = dogs
         } else { doguis = dogs}
         
-
         if(filter.temperament.length>=1){
             const all=[]
-            console.log(filter.temperament+' dentro de funcion filtro')
-            filter.temperament.forEach((temp)=>{
-                console.log(filter.temperament+' dentro del forEach')
-                console.log(temp+' variable del forEach')
-	            doguis.filter((element) => {
-                    console.log(temp+' dentro del filter')
-                    console.log(element.temperament)
-                     if( typeof(element.temperament) === 'string' && (element.temperament).includes(temp)){
+           
+                doguis.filter((dog) => {
+                if( typeof(dog.temperament)=== 'string' && filter.temperament.every(el=>dog.temperament.includes(el))){
+                    all.push(dog)
+                }
+                    
+            })
+             doguis = all
+            }
+            
+                        
+        // if(filter.temperament.length>=1){
+        //     const all=[]
+        //     //console.log(filter.temperament+' dentro de funcion filtro')
+        //     filter.temperament.forEach((temp)=>{
+        //     //    console.log(filter.temperament+' dentro del forEach')
+        //     //    console.log(temp+' variable del forEach')
+	    //         doguis.filter((element) => {
+        //     //        console.log(temp+' dentro del filter')
+        //      //       console.log(element.temperament)
+        //              if( typeof(element.temperament) === 'string' && (element.temperament).includes(temp)){
 
                         
-                     all.push(element)
-                     }
+        //              all.push(element)
+        //              }
                           
-                    }
-                )
+        //             }
+        //         )
       
-             })
-            const data= Array.from(new Set(all))
-            doguis = data
+        //      })
+        //     const data= Array.from(new Set(all))
+        //     doguis = data
             
-         } 
+        //  } 
         if(filter.order === 'az'){
            const names = doguis.map(el => (el.name).toLowerCase())
            const sorted = names.sort()
@@ -135,20 +149,20 @@ export const Home = ()=>{
            const ordered = sorted.map((e)=> doguis.find(el=> el.name.toLowerCase() === e))
            doguis = ordered
         } else if (filter.order === 'min'){
-           doguis = doguis.sort((a, b) => (parseInt((a.weight.split('-'))[0]) > parseInt((b.weight.split('-'))[0])) ? 1 : -1)
+           doguis = doguis.sort((a, b) => (parseInt((a.weight.split('-'))[0].trim()) > parseInt((b.weight.split('-'))[0].trim())) ? 1 : -1)
         } else if (filter.order === 'max'){
-            doguis = doguis.sort((a, b) => (parseInt((a.weight.split('-'))[0]) < parseInt((b.weight.split('-'))[0])) ? 1 : -1)
+            doguis = doguis.sort((a, b) => (parseInt((a.weight.split('-'))[0].trim()) < parseInt((b.weight.split('-'))[0].trim())) ? 1 : -1)
         }
 
 
 
-        setDogsFiltered(doguis)
+        // setDogsFiltered(doguis)
         dispatch(filterr(doguis))
 
         
     },[filter,searchedFlag])
 
-    const filterOn = useSelector(state=> state.filterOn)
+    // const filterOn = useSelector(state=> state.filterOn)
     
     const [searchDog, setSearchDog] = useState('')
     function handleSearch (e){
@@ -156,7 +170,7 @@ export const Home = ()=>{
         setSearchDog(          
             aux)
     }
-    console.log(searchDog)
+    //console.log(searchDog)
     // const handleSearch = (e) =>{
 
     //     setSearchDog ( {
@@ -168,14 +182,22 @@ export const Home = ()=>{
     function handleClickSearch (){
         
         dispatch(searchByName(searchDog))
-       
-        
+             
     }
+
     function handleClickClear (){
 
         dispatch(clearSearchByName())
         setSearchDog('')
-    }    
+    }  
+    
+    useEffect(()=>{
+        return ()=>{
+            let obj = filter
+            dispatch(holdFilter(obj))
+          }
+    },[])
+
     if(Object.keys(error).length>0){
         return(
             <>
@@ -194,12 +216,12 @@ export const Home = ()=>{
         <button type='button' name='search' onClick={handleClickSearch}>Search!</button>
         <button type='button' name='clearsearch' onClick={handleClickClear}>Clear</button>
         </div>
-        <NavLink to='/'>
+        {/* <NavLink to='/'>
             <button>Landing</button>
         </NavLink>
         <NavLink to='/create'>
             <button>Create Breed</button>
-        </NavLink>
+        </NavLink> */}
         <select name='origin'
                 value={filter.origin} 
                 onChange={(e)=>handleOrigin(e)}>
@@ -227,7 +249,7 @@ export const Home = ()=>{
                 })} 
                 
             </select>
-        <button value='filtro'  onClick={onClick}>Filtro</button>
+        <button value='filtro'  onClick={onClick}>ClearTemp</button>
     
 
         <section className={style.page}>

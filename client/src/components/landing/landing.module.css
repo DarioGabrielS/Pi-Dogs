@@ -1,6 +1,6 @@
 .landing{
-    background-image: url('loadingdog.jpg');
-    background-size: contain;
+    background-image: url('./doggangsnow.jpg');
+    background-size: cover;
     width: 100%;
     height: 100vh;
     background-color: rgb(112, 196, 177);

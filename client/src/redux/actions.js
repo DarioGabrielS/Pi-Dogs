@@ -115,7 +115,7 @@ export const holdFilter = (obj)=>{
   return function (dispatch){
     dispatch({
       type:FILTER_HOLD,
-      payload:obj
+      payload:{obj}
     })
   }
 }
@@ -130,11 +130,11 @@ export const clearSearchByName = ()=>{
 
 export const filtro = (dogs)=>{
   return function(dispatch){
-    const filtrado = dogs.filter(e=> e.origin === 'api')
-  dispatch({
-    type: FILTRO,
-    payload: filtrado
-  })
+  //   const filtrado = dogs.filter(e=> e.origin === 'api')
+  // dispatch({
+  //   type: FILTRO,
+  //   payload: filtrado
+  // })
   }
 
 }
