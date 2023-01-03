@@ -27,8 +27,8 @@ useEffect( ()=>{
 let i =4
 {if (Object.keys(dog).length<1 && error.length<=0){
             return(
-                <div>
-                <Loading/>
+                <div className={style.loading}>
+                    <Loading/>
                 {/* <h1>Loading...</h1> */}
                 </div>
             )
@@ -42,15 +42,18 @@ let i =4
         } else {
             return(
         <>
-        <div>
-            <h3>{id}</h3>
+        <div className={style.container}>
+            <section>
             
-            <h3>Name: {dog[0].name}</h3>
-            <h4>Temp: {dog[0].temperament}</h4>
+            <h2>{dog[0].name}</h2>
+            <h4>Temperament: {dog[0].temperament}</h4>
             <h4>Weight: {dog[0].weight}</h4>
             <h4>Height: {dog[0].height}</h4>
             <h4>Life span: {dog[0].life_span}</h4>
+            </section>
+            <div>
             <img src={dog[0].img} alt='Not found'/>
+            </div>
         </div>
         </>
 

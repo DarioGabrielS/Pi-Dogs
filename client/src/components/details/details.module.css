@@ -1,0 +1,37 @@
+.container{
+    display: grid;
+    position: relative;
+    align-items: center;
+    /* width: 65%;
+    height: 75%;
+    margin: 3% 17.5%; */
+    width: 70%;
+    height: 50%;
+    margin: 3% 15%;
+    border-radius: 30px;
+    background-image: linear-gradient(#0c212b, #3e717b);
+    color: aliceblue;
+    text-shadow: 2px 2px #173b42;
+    box-shadow: #0c212b 5px 5px 0px 0px;
+    
+}
+
+.container img{
+    border-radius: 20px;
+    width: 90%;
+    height: 50%;
+    position: relative;
+    bottom: 0%;
+    padding-bottom: 30px;
+}
+.container h2{
+    font-family: 'Anybody', cursive;
+}
+
+.loading{
+    width:400px;
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    margin:10% 35% 0% 35%;
+}

@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom"
-
+import style from './navBar.module.css'
 
 export const NavBar = () =>{
 
 
     return(
-        <>
+        <div className={style.nav}>
             <NavLink to='/home'>
                 <button type='button'>HOME</button>
             </NavLink>
@@ -16,6 +16,6 @@ export const NavBar = () =>{
                 <button type='button'>ABOUT</button>
             </NavLink>
             
-        </>
+        </div>
     )
 }

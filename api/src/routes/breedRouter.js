@@ -45,7 +45,7 @@ router.post("/", validateDog, async (req, res) => {
 
     res.send(created);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send('Request failed with status code 400');
   }
 });
 

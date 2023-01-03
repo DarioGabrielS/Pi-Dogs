@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import { getTempers } from "../../redux/actions"
 import axios from 'axios'
 import style from './form.module.css'
+
 export const Form = ()=>{
     
 const dispatch = useDispatch()
@@ -28,7 +29,7 @@ const [dog, setDog] = useState({
     life_span: '',
     img:''
 })
-
+const [response, setResponse] = useState([{'uno':'dos'}])
 const [errorButton, setErrorButton] = useState(true)
 
 const [errorForm, setErrorForm] = useState({
@@ -50,7 +51,7 @@ const dogSend = {
     img: dog.img
 }
 
-console.log(dogSend)
+
 const handleChange = (e) =>{
 
  setDog ( {
@@ -69,8 +70,11 @@ const handleChange = (e) =>{
 const handleSubmit = async (e)=>{
     e.preventDefault()
     setErrorForm(validate(dog)) 
-    await axios.post('http://localhost:3001/breeds',dogSend)
-    const result = await axios.get(`http://localhost:3001/breeds?name=${dogSend.name}`)
+    const info = await axios.post('http://localhost:3001/breeds',dogSend)
+    const res = info.data
+    setResponse(res)
+    
+   // const result = await axios.get(`http://localhost:3001/breeds?name=${dogSend.name}`)
 }
 
 const validate = (dog)=> {
@@ -139,10 +143,34 @@ useEffect(()=>{
         setErrorButton(true)
     }
 },[errorForm])
-console.log(dog)
 
+function handleClear (){
+    /*setResponse('')*/
+}
+
+if((response)!=''){
+    console.log(response)
+    if(!response[0].hasOwnProperty('message')){
+        
     return(
-        <>
+        <section className={style.created}>
+            <div >
+                <h1>Created succesfully!</h1>
+                <button type="button" onClick={handleClear}>Noted</button>
+            </div>
+        </section>
+    )
+    }else{
+        return(
+            <div>
+            <h1>Request failed with status code 400</h1>
+            <button type="button" onClick={handleClear}>Noted</button>
+            </div>
+        )
+    }
+} else {
+    return(
+        <div className={style.container}>
         <form className={style.form}onSubmit={handleSubmit}>
             <div>
                 <div><h3>Create you own Breed</h3></div>
@@ -237,6 +265,6 @@ console.log(dog)
                 onSubmit={(e)=>handleSubmit(e)}>CREATE!</button>
         </form>
             
-        </>
-    )
+        </div>
+    )}
 }

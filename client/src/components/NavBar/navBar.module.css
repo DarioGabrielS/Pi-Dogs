@@ -1,0 +1,31 @@
+
+.nav button {
+    font-family: Anton;
+    background-color:#3e717b ;
+    border: none;
+    padding: 5px;
+    font-size: 1rem;
+    width: 8em;
+    border-radius: 1rem;
+    color: #e3ca93;
+    box-shadow: 0 0.2rem #dfd9d9;
+    cursor: pointer;
+    margin: 5px 5px 5px 5px;
+   }
+   
+   .nav button:active {
+    color: white;
+    box-shadow: 0 0.1rem #dfd9d9;
+    transform: translateY(0.2rem);
+   }
+   
+   .nav button:hover:not(:disabled) {
+    background: #e3ca93;
+    color: #3e717b;
+    text-shadow: 0 0.1rem #bcb4b4;
+   }
+   
+   .nav button:disabled {
+    cursor: auto;
+    color: grey;
+   }

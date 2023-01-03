@@ -1,13 +1,25 @@
 .card {
+  padding-top: 10px;
   width: 200px;
   height: 300px;
   border-radius: 30px;
-  background: #8abdb6;
+  background: #3e717b;
   box-shadow: 15px 15px 30px #bebebe,
              -15px -15px 30px #ffffff;
   text-align: center;
   text-decoration: none;
+  color: #e3ca93;
+  transition: all 300ms;
+  opacity: 0.9;
+  margin: 30px;
 }
+
+.card:hover {
+ opacity: 1;
+ transform: scale(1.10);
+}
+
+
 .img{
   /* padding: 10px 0px 0px 10px; */
   flex-direction: column;

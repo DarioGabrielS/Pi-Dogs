@@ -15,14 +15,13 @@ export const Landing = () => {
   return (
     <>
         <div className={style.landing}>
-          <h1>Welcome to the Dog enciclopedia</h1>
+          <h1>DogPedia</h1>
           <br></br>
           <NavLink to="/home">
               <button className={style.button}>Enter</button>
           </NavLink>
         </div>
-        <div>
-        </div>
+        
     </>
   );
 };

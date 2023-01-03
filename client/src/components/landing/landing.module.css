@@ -1,18 +1,47 @@
 .landing{
+    background-image: url('loadingdog.jpg');
+    background-size: contain;
     width: 100%;
-    height: 100em;
+    height: 100vh;
     background-color: rgb(112, 196, 177);
     flex-wrap: wrap;
+    color: #e3ca93;
+    text-shadow: 1px 1px #3e717b;
+    font:Yeseva One;
+    font-size: 80px;
+    padding-top: 40px;
 }
-
-.button{
-    height: 50px;
-    width: 100px;
-    border-radius: 20px;
-    text-decoration: none;
-    color: blue;
-    background-color: azure;
-    font-size: medium;
-    font-weight: 800;
-    border-color: none;
+.landing h1{
+    margin-top: 60px;
 }
+.button {
+    font-family: Anton;
+    background-color:#0c212b ;
+    border: none;
+    padding: 5px;
+    font-size: 35px;
+    width:  140px;
+    height: 75px;
+    border-radius: 1rem;
+    color: #e3ca93;
+    box-shadow: 0 0.2rem #dfd9d9;
+    cursor: pointer;
+    margin: 5px 5px 5px 5px;
+   }
+   
+   .button:active {
+    color: white;
+    box-shadow: 0 0.1rem #dfd9d9;
+    transform: translateY(0.2rem);
+   }
+   
+   .button:hover:not(:disabled) {
+    background: #e3ca93;
+    color: #3e717b;
+    text-shadow: 0 0.1rem #bcb4b4;
+   }
+   
+   .button:disabled {
+    cursor: auto;
+    color: grey;
+   }
