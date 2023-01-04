@@ -14,6 +14,7 @@
     text-shadow: 2px 2px #173b42;
     box-shadow: #0c212b 5px 5px 0px 0px;
     
+    
 }
 
 .container img{
@@ -26,6 +27,7 @@
 }
 .container h2{
     font-family: 'Anybody', cursive;
+    
 }
 
 .loading{

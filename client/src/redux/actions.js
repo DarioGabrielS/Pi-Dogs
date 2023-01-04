@@ -5,7 +5,7 @@ export const ERROR = "ERROR"
 export const GET_USERS = "GET_USERS"
 export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS'
 export const FILTRO = 'FILTRO'
-export const FILTERR = 'FILTERR'
+export const FILTERED_DOGS = 'FILTERED_DOGS'
 export const SEARCHBYNAME = 'SEARCHBYNAME'
 export const CLEARSEARCHBYNAME = 'CLEARSEARCHBYNAME'
 export const GET_DOG_PARAMS = 'GET_DOG_PARAMS'
@@ -56,10 +56,10 @@ export const getTempers = ()=>{
   }
 }
 
-export const filterr = (dogs)=>{
+export const filteredDogs = (dogs)=>{
   return function (dispatch){
     dispatch({
-      type: FILTERR,
+      type: FILTERED_DOGS,
       payload: dogs
     })
   }
@@ -185,3 +185,4 @@ export const getUsers = () => {
         .catch((err) => console.log(err));
     };
   };
+

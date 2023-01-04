@@ -3,7 +3,10 @@
     flex-direction: column;
     
 }
-
+.container h1{
+  color: #c8d8df;
+  text-shadow: rgb(49, 37, 37) 2px 5px;
+}
 .form{
     border-radius: 30px;
     border: #0c212b 2px solid;
@@ -11,19 +14,22 @@
     padding: 30px;
     width: 40%;
     align-items: center;
-    background-color: #6e8790;
+    background-image: linear-gradient(#6e8790, #0c212b);
+    /* background-color: #6e8790; */
     align-self: center;
 }
 .form h5{
-    color: rgb(133, 28, 9);
+    color: rgb(250, 175, 36);
 }
 .form button {
   font-family: Anton;
+
   margin: 15px 1px 0px 1px;
   background-color: #bcb4b4;
   border: none;
   padding: 0px 4px 0px 4px;
   font-size: 15px;
+  
   height: 30px;
   width: auto;
 
@@ -39,8 +45,8 @@
   transform: translateY(0.2rem);
  }
  .form button:hover:not(:disabled) {
-  background: #e3ca93;
-  color: #0c212b;
+  background: #0c212b;
+  color: #bcb4b4;
   text-shadow: 0 0.05rem #bcb4b4;
  }
 .form button:disabled{
@@ -50,12 +56,14 @@
 
 .form label {
     max-height: 40px;
-    padding: 3px 3px;
-    border: 2px solid #3e717b;
+    padding: 7px 3px 3px 3px;
+    border-bottom: 2px solid #202729;
+    border-left: 2px solid #202729;
     border-radius: 6px 0 0 6px;
     background-color: #3e717b;
     color: #e3ca93;
     font-size: 15px;
+    font-weight: 600;
     
     
   }
@@ -66,7 +74,7 @@
     padding: 3px 3px;
     color: #e3ca93;
     font-size: 15px;
-    border: 2px solid #3e717b;
+    border-bottom: 2px solid #202729;
     border-radius: 0 6px 6px 0;
     background-color: #0c212b;
   }

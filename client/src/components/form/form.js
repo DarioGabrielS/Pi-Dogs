@@ -118,7 +118,7 @@ const validate = (dog)=> {
 function handleTempButton (e){
     if(e.target.value === 'undo' && dog.temperament.length>0){
         let temps = dog.temperament
-        let pop = dog.temperament.pop()
+     //   let pop = dog.temperament.pop()
         
         setDog({
             ...dog,
@@ -161,7 +161,7 @@ function handleClear (){
     setResponse('')
 }
 
-if((response)!=''){
+if((response)!==''){
     console.log(response)
     if(!response.message){
         

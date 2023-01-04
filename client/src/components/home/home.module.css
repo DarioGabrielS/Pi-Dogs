@@ -1,8 +1,71 @@
 .page {
     /* display: flex; */
-    background-color: #0c212b;
+    background-color: none;
     flex-direction: row;
     flex-wrap: wrap;
     align-items:flex-start;
     
 } 
+
+    
+.button {
+    font-family: Anton;
+    font-weight: 200;
+    opacity: 1;
+    margin: 5px 1px;
+    background-color: #46565e;
+    border: none;
+    padding: 2px;
+    font-size: 15px;
+    height: auto;
+    width: auto;
+    border-radius: 5px;
+    color: rgb(216, 208, 208);
+    box-shadow: 0 0.4rem #dfd9d9;
+    cursor: pointer;
+}
+       
+.button:active {
+    color: white;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+}
+.button:hover:not(:disabled) {
+    background-color: whitesmoke;
+    color: #183c4d;
+        /* background: #e3ca93;
+        color: #3e717b; */
+    text-shadow: 0 0.1rem #bcb4b4;
+}
+       
+.search input{
+
+    max-height: 40px;
+    max-width: 180px;
+    padding: 3px 8px 5px 8px;
+    color: whitesmoke;
+    font-size: 15px;
+    border-bottom: 3px solid #dfd9d9;
+    border-left: #dfd9d9 solid 1px;
+    border-bottom-left-radius: 5px;
+    background-color: #0c212b;
+    font-weight: 600;
+
+}
+.select{
+    
+        /* // A reset of styles, including removing the default dropdown arrow */
+        /* appearance: none; */
+        /* // Additional resets for further consistency */
+        margin-top: 5px;
+        background-color: rgb(218, 201, 201);
+        color: #0c212b;
+        border-bottom: 5px solid #dfd9d9;
+        padding: 3px;
+        margin: 0;
+        width: auto;
+        
+      
+      
+}
+      

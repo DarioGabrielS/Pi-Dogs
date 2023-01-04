@@ -12,11 +12,11 @@ const pagesTotal = Math.ceil(allDogs.length/dogsPerPage)
 const [currentPage, setCurrentPage] = useState(1)
 const firstItem = (currentPage*dogsPerPage)-dogsPerPage
 const lastItem = (currentPage*dogsPerPage)-1
-const arr=[]
+//const arr=[]
 const filterOn = useSelector(state=>state.filterOn)
 
 useEffect(()=>{
-    const init = 1
+    
     setCurrentPage(1)
 },[filterOn])
 
@@ -53,7 +53,7 @@ function display(){
     return(<div><h3>Could not find requested dogs</h3></div>)
    } 
    if( typeof(allDogs[i]) != 'undefined'){              
-   p.push(<section className={style.section}>
+   p.push(<section className={style.section} key={allDogs[i].id}>
     <NavLink to={`/breeds/${allDogs[i].id}` } className={style.nav}>
             <Card 
                 key={allDogs[i].id}
@@ -76,14 +76,14 @@ return(
         <div className={style.menu}>
         <button className={style.button} value='first' onClick={handleFirst}>First</button>
         <button className={style.button} type='click' value='previous' onClick={(e)=>handleClick(e)}>̣Prev</button>
-        {/* <div className={style.button}> */}
+        
        {
         
             array.map(el=>{
-                return <button class='target' id={el} value={el} key={el} onClick={handlePage}>{el}</button>
+                return <button  id={el} value={el} key={el} onClick={handlePage}>{el}</button>
             })
         }
-        {/* </div> */}
+        
         <button className={style.button} type='click' value= 'next' onClick={(e)=>handleClick(e)}>Next</button>
         <button className={style.button} value='last' onClick={handleFirst}>Last</button>
         <h4> Page {currentPage}</h4>
@@ -91,7 +91,7 @@ return(
         <section className={style.page}>{
             display()
         }</section>
-        {/* <h1>Primer item{firstItem} Ultimo item {lastItem}</h1> */}
+        
     </>
 )
 

@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { getdogparams } from '../../redux/actions'
 import { clearDetail } from '../../redux/actions'
 import { Loading } from './loading'
@@ -24,12 +24,12 @@ useEffect( ()=>{
 },[dispatch, id]
 )
 
-let i =4
+
 {if (Object.keys(dog).length<1 && error.length<=0){
             return(
                 <div className={style.loading}>
                     <Loading/>
-                {/* <h1>Loading...</h1> */}
+                
                 </div>
             )
 
@@ -42,6 +42,7 @@ let i =4
         } else {
             return(
         <>
+        
         <div className={style.container}>
             <section>
             
@@ -55,6 +56,7 @@ let i =4
             <img src={dog[0].img} alt='Not found'/>
             </div>
         </div>
+        
         </>
 
             )
@@ -63,17 +65,3 @@ let i =4
 
     
 }
-// import { useEffect } from 'react'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { Link, useParams } from 'react-router-dom'
-// import { getDetail } from '../../redux/actions'
-
-
-// export default function DetailDog() {
-//   const { id } = useParams()
-//   const dispatch = useDispatch()
-//   const dog = useSelector((state) => state.detail)
-
-//   useEffect(() => {
-//     dispatch(getDetail(id))
-//   }, [id, dispatch])

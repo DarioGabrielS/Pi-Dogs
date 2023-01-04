@@ -6,15 +6,18 @@
   width: 200px;
   height: 300px;
   border-radius: 30px;
-  background: #3e717b;
-  box-shadow: 15px 15px 30px #888181,
-             -15px -15px 30px #888181;
+  background-image: linear-gradient(#aeb8bb,#3e717b);
+  
+  /* background: #3e717b; */
+  box-shadow: 15px 15px 30px #bbb4b4,
+             -15px -15px 30px #bbb4b4;
   text-align: center;
   text-decoration: none;
-  color: #e3ca93;
+  color: #0c212b;
   transition: all 300ms;
-  opacity: 0.9;
+  opacity: 0.85;
   margin: 40px;
+  
 }
 
 .card:hover {
@@ -25,7 +28,7 @@
 
 .img{
  
-  
+  opacity: 1;
   box-sizing: border-box;
   width: 200px;
   height: 120px;
@@ -33,4 +36,8 @@
   justify-self: flex-end;
   border-radius: 0px 0px 30px 30px;
  
+}
+.card section{
+  opacity: 1;
+  text-shadow: 1px 1px solid whitesmoke;
 }
