@@ -10,8 +10,8 @@ export const CLEARSEARCHBYNAME = 'CLEARSEARCHBYNAME'
 export const GET_DOG_PARAMS = 'GET_DOG_PARAMS'
 export const CLEAR_DETAIL = 'CLEAR_DETAIL'
 export const FILTER_HOLD = 'FILTER_HOLD'
-
-
+export const ORIGIN = 'ORIGIN'
+export const ORDER = 'ORDER'
 export const getDogs = () =>{
     return async function (dispatch) {
         try {
@@ -138,7 +138,22 @@ export const filtro = (dogs)=>{
   }
 
 }
-
+export const originGS = (value)=>{
+  return function (dispatch){
+    dispatch({
+      type: ORIGIN,
+      payload: value
+    })
+  }
+}
+export const order = (value)=>{
+  return function(dispatch){
+    dispatch({
+      type:ORDER,
+      payload: value
+    })
+  }
+}
 export const getUsers = () => {
     return function (dispatch) {
       fetch("https://jsonplaceholder.typicode.com/users")

@@ -73,25 +73,24 @@ function display(){
 return(
     
     <>
-        {/* <h1>Dogs per page{dogsPerPage}</h1>
-        <h1>Total Pages{pagesTotal}</h1>
-        <h1></h1> */}
+        <div className={style.menu}>
         <button className={style.button} value='first' onClick={handleFirst}>First</button>
         <button className={style.button} type='click' value='previous' onClick={(e)=>handleClick(e)}>̣Prev</button>
-        <div className={style.button}
-    >{
+        {/* <div className={style.button}> */}
+       {
         
             array.map(el=>{
-                return <button value={el} key={el} onClick={handlePage}>{el}</button>
+                return <button class='target' id={el} value={el} key={el} onClick={handlePage}>{el}</button>
             })
         }
-        </div>
+        {/* </div> */}
         <button className={style.button} type='click' value= 'next' onClick={(e)=>handleClick(e)}>Next</button>
         <button className={style.button} value='last' onClick={handleFirst}>Last</button>
+        <h4> Page {currentPage}</h4>
+        </div>
         <section className={style.page}>{
             display()
         }</section>
-        <h4>Current Page {currentPage}</h4>
         {/* <h1>Primer item{firstItem} Ultimo item {lastItem}</h1> */}
     </>
 )

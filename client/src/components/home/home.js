@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
-import { NavLink } from "react-router-dom"
+
 import { Paginado } from "../paginado/paginado.js"
-import {filtro, filterr, searchByName, clearSearchByName, holdFilter} from "../../redux/actions.js"
+import {filtro, filterr, searchByName, clearSearchByName, originGS} from "../../redux/actions.js"
 import { useState } from "react"
 import { useEffect } from "react"
 import { getTempers, getDogs } from "../../redux/actions.js"
@@ -13,9 +13,7 @@ export const Home = ()=>{
 
     useEffect(()=>{
         dispatch(getTempers())
-        // return ()=>{
-        //     dispatch(holdFilter(filter))
-        //   }
+       
     },[dispatch])
 
     
@@ -25,7 +23,7 @@ export const Home = ()=>{
     })
     const tempersSelect = tempers.sort()
 
-    const filterhold= useSelector(state => state.holdFilter)
+    
     //I get the error from the store and then conditionally render
     const error = useSelector(state=> state.error)
     
@@ -44,7 +42,10 @@ export const Home = ()=>{
         order:'az',
         
     })
-    
+    // ----------------------------- AQUI VIENE LO NUEVO
+    const origin = useSelector(state=> state.origin)
+
+    // -----------------------------
     
 
     //OJO ESTA LINEA QUE ESTA DECLARADA PERO PARECE QUE NO HACE NADA
@@ -77,12 +78,19 @@ export const Home = ()=>{
     //     )
         
     // }
-    function handleOrigin (e) {
-        setFilter({
-            ...filter,
-            [e.target.name]: e.target.value
-        })
+
+     //---------ESTA HANDLE ES DEL SISTEMA ORIGINAL--------------------------
+    // function handleOrigin (e) {
+    //     setFilter({
+    //         ...filter,
+    //         [e.target.name]: e.target.value
+    //     })
+    // }
+     // ------------------------------------------------------
+    function handleOrigin (e){
+        dispatch(originGS(e.target.value))
     }
+
     function handleSelect (e) {
         setFilter({
             ...filter,
@@ -94,9 +102,11 @@ export const Home = ()=>{
         
         let doguis=dogs
         
-        if(filter.origin === 'db') {            
+        // if(filter.origin === 'db') {    
+        if(origin === 'db'){        
             doguis = dogs.filter((e)=>{return e.origin === 'db'})
-        } else if (filter.origin === 'api') {
+        // } else if (filter.origin === 'api') {
+        } else if(origin=== 'api'){
             doguis = dogs.filter((e)=>{return e.origin === 'api'})
         } else if (filter.origin === 'all') {
             doguis = dogs
@@ -115,29 +125,7 @@ export const Home = ()=>{
             }
             
                         
-        // if(filter.temperament.length>=1){
-        //     const all=[]
-        //     //console.log(filter.temperament+' dentro de funcion filtro')
-        //     filter.temperament.forEach((temp)=>{
-        //     //    console.log(filter.temperament+' dentro del forEach')
-        //     //    console.log(temp+' variable del forEach')
-	    //         doguis.filter((element) => {
-        //     //        console.log(temp+' dentro del filter')
-        //      //       console.log(element.temperament)
-        //              if( typeof(element.temperament) === 'string' && (element.temperament).includes(temp)){
-
-                        
-        //              all.push(element)
-        //              }
-                          
-        //             }
-        //         )
-      
-        //      })
-        //     const data= Array.from(new Set(all))
-        //     doguis = data
-            
-        //  } 
+        
         if(filter.order === 'az'){
            const names = doguis.map(el => (el.name).toLowerCase())
            const sorted = names.sort()
@@ -159,9 +147,10 @@ export const Home = ()=>{
         // setDogsFiltered(doguis)
         dispatch(filterr(doguis))
 
-        
-    },[filter,searchedFlag])
-
+    },[searchedFlag, origin])
+    // --------------------- LA DE ABAJO ES LA QUE VA   
+    // },[filter,searchedFlag])
+    //-----------------------------------------------
     // const filterOn = useSelector(state=> state.filterOn)
     
     const [searchDog, setSearchDog] = useState('')
@@ -191,12 +180,7 @@ export const Home = ()=>{
         setSearchDog('')
     }  
     
-    useEffect(()=>{
-        return ()=>{
-            let obj = filter
-            dispatch(holdFilter(obj))
-          }
-    },[])
+    
 
     if(Object.keys(error).length>0){
         return(

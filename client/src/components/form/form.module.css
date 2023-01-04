@@ -5,7 +5,11 @@
 }
 
 .form{
-    width: 50%;
+    border-radius: 30px;
+    border: #0c212b 2px solid;
+    margin-top: 30px;
+    padding: 30px;
+    width: 40%;
     align-items: center;
     background-color: #6e8790;
     align-self: center;
@@ -13,12 +17,37 @@
 .form h5{
     color: rgb(133, 28, 9);
 }
-.form button{
-background-color: #e3ca93;
-color: #0c212b;
-cursor: pointer;
+.form button {
+  font-family: Anton;
+  margin: 15px 1px 0px 1px;
+  background-color: #bcb4b4;
+  border: none;
+  padding: 0px 4px 0px 4px;
+  font-size: 15px;
+  height: 30px;
+  width: auto;
 
+  border-radius: 5px;
+  color: #0c212b;
+  box-shadow: 0 0.4rem #dfd9d9;
+  cursor: pointer;
+ }
+ 
+ .form button:active {
+  color: white;
+  box-shadow: 0 0.1rem #dfd9d9;
+  transform: translateY(0.2rem);
+ }
+ .form button:hover:not(:disabled) {
+  background: #e3ca93;
+  color: #0c212b;
+  text-shadow: 0 0.05rem #bcb4b4;
+ }
+.form button:disabled{
+  cursor: auto;
+  color: grey;
 }
+
 .form label {
     max-height: 40px;
     padding: 3px 3px;

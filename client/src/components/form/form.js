@@ -187,7 +187,7 @@ if((response)!=''){
         <div className={style.container}>
         <form className={style.form}onSubmit={handleSubmit}>
             <div>
-                <div><h3>Create you own Breed</h3></div>
+                <div><h1>Create your own Breed</h1></div>
             <label >Name:  </label>
             <input 
                 name='name' 
@@ -261,7 +261,7 @@ if((response)!=''){
                 placeholder='How old they get?' />
                 {errorForm.life_span? (<h5><small>{errorForm.life_span}</small></h5>) : false}
             </div>
-            <div>
+            {/* <div>
             <label >Image:  </label>
             <input 
                 name='img' 
@@ -269,8 +269,8 @@ if((response)!=''){
                 onChange={(e)=>handleChange(e)} 
                 placeholder='Image URL' />
                 {errorForm.img? (<h5><small>{errorForm.img}</small></h5>) : false}
-            </div>
-            <br></br>
+            </div> */}
+           <br></br>
             <button type='button' 
                  
                 onClick={(e)=>handleReset(e)}>RESET</button>
