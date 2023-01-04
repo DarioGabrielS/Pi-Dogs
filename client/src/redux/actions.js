@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export const GET_DOGS = "GET_DOGS"
 export const ERROR = "ERROR"
 export const GET_USERS = "GET_USERS"
@@ -12,6 +13,7 @@ export const CLEAR_DETAIL = 'CLEAR_DETAIL'
 export const FILTER_HOLD = 'FILTER_HOLD'
 export const ORIGIN = 'ORIGIN'
 export const ORDER = 'ORDER'
+export const FILTER_TEMPER = 'FILTER_TEMPER'
 export const getDogs = () =>{
     return async function (dispatch) {
         try {
@@ -146,7 +148,7 @@ export const originGS = (value)=>{
     })
   }
 }
-export const order = (value)=>{
+export const orderGS = (value)=>{
   return function(dispatch){
     dispatch({
       type:ORDER,
@@ -154,6 +156,20 @@ export const order = (value)=>{
     })
   }
 }
+
+
+
+
+ export const filtTemp = (value)=>{
+    return function (dispatch){
+      dispatch({
+          type: FILTER_TEMPER,
+          payload: value
+      })
+    }
+
+ }
+
 export const getUsers = () => {
     return function (dispatch) {
       fetch("https://jsonplaceholder.typicode.com/users")

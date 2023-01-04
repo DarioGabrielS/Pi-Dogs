@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 
 import { Paginado } from "../paginado/paginado.js"
-import {filtro, filterr, searchByName, clearSearchByName, originGS} from "../../redux/actions.js"
+import {filtro, filterr, searchByName, clearSearchByName, originGS, orderGS, filtTemp} from "../../redux/actions.js"
 import { useState } from "react"
 import { useEffect } from "react"
 import { getTempers, getDogs } from "../../redux/actions.js"
@@ -44,9 +44,13 @@ export const Home = ()=>{
     })
     // ----------------------------- AQUI VIENE LO NUEVO
     const origin = useSelector(state=> state.origin)
-
+    const order = useSelector(state=>state.order)
+    let temperaments = useSelector(state=>state.temperaments)
+    let [temp, setTemp] = useState(temperaments)
     // -----------------------------
-    
+    useEffect(()=>{
+        setTemp(temperaments)
+    },[temperaments])
 
     //OJO ESTA LINEA QUE ESTA DECLARADA PERO PARECE QUE NO HACE NADA
     
@@ -65,11 +69,8 @@ export const Home = ()=>{
         
 
      function onClick (e){
-         setFilter({
-            ...filter,
-            'temperament':[]
-
-         })
+         dispatch(filtTemp([]))
+         
      }
 
     // function handleCheck (e){
@@ -90,14 +91,23 @@ export const Home = ()=>{
     function handleOrigin (e){
         dispatch(originGS(e.target.value))
     }
-
-    function handleSelect (e) {
-        setFilter({
-            ...filter,
-            'temperament': Array.from(new Set([...filter.temperament,e.target.value]))
-        })
+    function handleOrder (e){
+        dispatch(orderGS(e.target.value))
     }
-  
+    
+    function handleSelect (e) {
+        console.log(temperaments)
+        dispatch(filtTemp([...temperaments,[e.target.value]]))
+                
+    }
+//------------------------ESTA ERA LA BUENA----------------
+    // function handleSelect (e) {
+    //     setFilter({
+    //         ...filter,
+    //         'temperament': Array.from(new Set([...filter.temperament,e.target.value]))
+    //     })
+    // }
+//----------------------------------------------------------
     useEffect(()=>{
         
         let doguis=dogs
@@ -112,11 +122,11 @@ export const Home = ()=>{
             doguis = dogs
         } else { doguis = dogs}
         
-        if(filter.temperament.length>=1){
+        if(temperaments.length>=1){
             const all=[]
            
                 doguis.filter((dog) => {
-                if( typeof(dog.temperament)=== 'string' && filter.temperament.every(el=>dog.temperament.includes(el))){
+                if( typeof(dog.temperament)=== 'string' && temperaments.every(el=>dog.temperament.includes(el))){
                     all.push(dog)
                 }
                     
@@ -126,19 +136,23 @@ export const Home = ()=>{
             
                         
         
-        if(filter.order === 'az'){
+        // if(filter.order === 'az'){
+           if(order === 'az'){
            const names = doguis.map(el => (el.name).toLowerCase())
            const sorted = names.sort()
            const ordered = sorted.map((e)=> doguis.find(el=> el.name.toLowerCase() === e))
            doguis = ordered
-        } else if (filter.order === 'za'){
+        // } else if (filter.order === 'za'){
+        } else if (order === 'za'){
            let names = doguis.map(el => el.name.toLowerCase()) 
            const sorted = names.sort().reverse()
            const ordered = sorted.map((e)=> doguis.find(el=> el.name.toLowerCase() === e))
            doguis = ordered
-        } else if (filter.order === 'min'){
+        // } else if (filter.order === 'min'){
+        } else if (order === 'min'){
            doguis = doguis.sort((a, b) => (parseInt((a.weight.split('-'))[0].trim()) > parseInt((b.weight.split('-'))[0].trim())) ? 1 : -1)
-        } else if (filter.order === 'max'){
+        // } else if (filter.order === 'max'){
+        } else if (order === 'max'){
             doguis = doguis.sort((a, b) => (parseInt((a.weight.split('-'))[0].trim()) < parseInt((b.weight.split('-'))[0].trim())) ? 1 : -1)
         }
 
@@ -147,7 +161,7 @@ export const Home = ()=>{
         // setDogsFiltered(doguis)
         dispatch(filterr(doguis))
 
-    },[searchedFlag, origin])
+    },[searchedFlag, origin, order,temperaments])
     // --------------------- LA DE ABAJO ES LA QUE VA   
     // },[filter,searchedFlag])
     //-----------------------------------------------
@@ -207,16 +221,17 @@ export const Home = ()=>{
             <button>Create Breed</button>
         </NavLink> */}
         <select name='origin'
-                value={filter.origin} 
+                value={origin} 
                 onChange={(e)=>handleOrigin(e)}>
                     <option value={'all'}>All Dogs</option>
+                    {/* <option value={'all'}>All</option> */}
                     <option value={'db'}>DataBase</option> 
                     <option value={'api'}>Api</option>
                 
         </select>
         <select name='order'
-                value={filter.order} 
-                onChange={(e)=>handleOrigin(e)}>
+                value={order} 
+                onChange={(e)=>handleOrder(e)}>
                     <option value={'az'}>A to Z</option>
                     <option value={'za'}>Z to A</option> 
                     <option value={'min'}>Min to Max</option>
@@ -224,7 +239,7 @@ export const Home = ()=>{
         </select>
         
         <select name='temperament'
-                value={filter.temperament} 
+                value={temperaments} 
                 onChange={(e)=>handleSelect(e)}>
                     {tempersSelect.map(element => {
                         return(
