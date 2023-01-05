@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react"
 import {useSelector, useDispatch} from 'react-redux'
-import { getTempers } from "../../redux/actions"
+import { getDogs, getTempers } from "../../redux/actions"
 import axios from 'axios'
 import style from './form.module.css'
 
 export const Form = ()=>{
     
 const dispatch = useDispatch()
-
+const allDogs = useSelector(state=>state.DOGS)
+if(allDogs.length<1){
+    dispatch(getDogs())
+}
 
 useEffect(()=>{
     dispatch(getTempers())
@@ -30,6 +33,7 @@ const [dog, setDog] = useState({
     img:''
 })
 const [response, setResponse] = useState('')
+
 const [errorButton, setErrorButton] = useState(true)
 
 const [errorForm, setErrorForm] = useState({
@@ -51,18 +55,30 @@ const dogSend = {
     img: dog.img
 }
 
-const checkAvailable = async (dog)=>{
-    console.log(dog)
-    if(typeof(dog)!='undefined'){
-      const info = await axios.get(`http://localhost:3001/breeds?name=${dog.name}`)
-      const value = info.data
-        if(value.name.toLowerCase().trim === dog.name.toLowerCase().trim()){
-            return false 
-        }else{
-        return true
-  }
-}
-}
+
+    
+
+const [available, setAvailable]= useState(false)
+
+function check (dog){
+        if(typeof(dog.name)!== ''){
+            
+            const exists = allDogs.filter((el)=> el.name.toLowerCase()=== dog.name.toLowerCase())
+            
+            if(exists.length>0){
+                return false
+            }else{
+                return true
+            }
+        }
+    }
+useEffect(()=>{
+    setAvailable(check(dog))
+},[dog, available])
+
+console.log(available)
+
+
 const handleChange = (e) =>{
 
  setDog ( {
@@ -92,6 +108,7 @@ const handleSubmit = async (e)=>{
 const validate = (dog)=> {
     const errors = {}
     
+    if(!available) errors.name='Name is NOT available'
     if(dog.name.length < 1) errors.name= ('Must enter a name')
     if(dog.name.trim().length < 1) errors.name = ('Name cant be just spaces')
     if( !/^[A-Za-z\s]*$/.test(dog.name)) errors.name='Valid name only includes letters and spaces'
@@ -112,13 +129,13 @@ const validate = (dog)=> {
 
     if(!/^\d{2}-?(\d{2})?$/.test(dog.life_span)) errors.life_span='Data must be in XX or XX-XX format'
     
-    console.log(checkAvailable())
+    
     return errors
 }
 function handleTempButton (e){
     if(e.target.value === 'undo' && dog.temperament.length>0){
+        let pop = dog.temperament.pop()
         let temps = dog.temperament
-     //   let pop = dog.temperament.pop()
         
         setDog({
             ...dog,
@@ -148,7 +165,7 @@ function handleReset (e){
 
 useEffect(()=>{
     setErrorForm(validate(dog))
-},[dog])
+},[dog, available])
 useEffect(()=>{
     if(Object.values(errorForm).length<1){
         setErrorButton(false)
@@ -160,9 +177,9 @@ useEffect(()=>{
 function handleClear (){
     setResponse('')
 }
-
+//------------------------------------ RENDER -------------------//
 if((response)!==''){
-    console.log(response)
+    
     if(!response.message){
         
     return(
@@ -175,7 +192,7 @@ if((response)!==''){
     )
     }else{
         return(
-            <div>
+            <div className={style.notCreated}>
             <h1>Request failed with status code 400</h1>
             <h2>{response.message}</h2>
             <button type="button" onClick={handleClear}>Noted</button>

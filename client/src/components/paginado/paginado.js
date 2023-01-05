@@ -50,7 +50,9 @@ function display(){
 
     for(let i=firstItem; i<=lastItem; i++){
    if(allDogs.length<1){
-    return(<div><h3>Could not find requested dogs</h3></div>)
+    return(<div className={style.message}>
+                <h3>Could not find requested dogs</h3>
+            </div>)
    } 
    if( typeof(allDogs[i]) != 'undefined'){              
    p.push(<section className={style.section} key={allDogs[i].id}>

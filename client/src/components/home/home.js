@@ -39,6 +39,7 @@ export const Home = ()=>{
    
     const origin = useSelector(state=> state.origin)
     const order = useSelector(state=>state.order)
+    
     let temperaments = useSelector(state=>state.temperaments)
     let [temp, setTemp] = useState(temperaments)
     // -----------------------------
@@ -48,6 +49,7 @@ export const Home = ()=>{
 
         
     //If the search option was used then ALLDOGS become just the searched dogs, else
+
     var dogs = ''
     if(searchedFlag){
          dogs = searchedDogs
@@ -85,13 +87,13 @@ export const Home = ()=>{
                         
         if(order === 'az'){
            const names = doguis.map(el => (el.name).toLowerCase())
-           const sorted = names.sort()
+           const sorted = Array.from(new Set(names.sort()))
            const ordered = sorted.map((e)=> doguis.find(el=> el.name.toLowerCase() === e))
            doguis = ordered
         
         } else if (order === 'za'){
            let names = doguis.map(el => el.name.toLowerCase()) 
-           const sorted = names.sort().reverse()
+           const sorted = Array.from(new Set(names.sort().reverse()))
            const ordered = sorted.map((e)=> doguis.find(el=> el.name.toLowerCase() === e))
            doguis = ordered
         
